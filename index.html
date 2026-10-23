@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#10161A">
+<title>Kilaw Smile — Idle Klinik Gigi</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app" data-page="home">
+
+  <header class="top">
+    <div class="score">
+      <div class="pts" id="money">Rp 0</div>
+      <div class="pps" id="dps">0 daya/dtk</div>
+    </div>
+    <div class="badges">
+      <span class="badge sp" title="Poin skill (dari gigi bersih)"><i>SP</i><b id="sp">0</b></span>
+      <span class="badge st" title="Bintang renovasi" hidden><i>⭐</i><b id="stars">0</b></span>
+      <button type="button" class="menu" id="btnMenu" aria-label="Alat">🛠️<i id="menuBadge" hidden></i></button>
+    </div>
+  </header>
+  <div class="clean" id="cleanWrap">
+    <div class="cbar"><div id="cleanbar"></div></div>
+    <div class="clabel" id="cleanLabel"></div>
+  </div>
+
+  <section class="stage" id="stage" aria-label="Ketuk noda di gigi untuk membersihkannya">
+    <div class="status" id="status"></div>
+    <svg id="tooth" class="tooth" viewBox="0 0 512 512" aria-hidden="true">
+      <defs>
+        <clipPath id="toothClip"><path d="M256 118 C232 96 190 96 164 112 C132 132 126 176 138 222 C148 262 158 292 164 336 C168 370 176 402 200 402 C224 402 232 364 240 330 C244 312 250 304 256 304 C262 304 268 312 272 330 C280 364 288 402 312 402 C336 402 344 370 348 336 C354 292 364 262 374 222 C386 176 380 132 348 112 C322 96 280 96 256 118 Z"/></clipPath>
+        <linearGradient id="enamel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d7e9e6"/></linearGradient>
+      </defs>
+      <circle class="halo" cx="256" cy="256" r="210"/>
+      <path class="body" d="M256 118 C232 96 190 96 164 112 C132 132 126 176 138 222 C148 262 158 292 164 336 C168 370 176 402 200 402 C224 402 232 364 240 330 C244 312 250 304 256 304 C262 304 268 312 272 330 C280 364 288 402 312 402 C336 402 344 370 348 336 C354 292 364 262 374 222 C386 176 380 132 348 112 C322 96 280 96 256 118 Z"/>
+      <g clip-path="url(#toothClip)" id="stains"></g>
+      <path class="gloss" d="M178 150 C160 166 158 196 164 224"/>
+    </svg>
+    <div class="fabs">
+      <button type="button" class="fab" id="fabSkill" aria-label="Skill">🌳<i id="fabSkillBadge" hidden></i></button>
+      <button type="button" class="fab" id="fabStats" aria-label="Statistik">📊</button>
+    </div>
+    <div class="cdbar" aria-hidden="true"><div id="cdfill"></div></div>
+    <div class="hint">Ketuk noda sampai hilang · geser jari = skill Geser</div>
+  </section>
+
+  <div class="tip" id="tip"><span class="tip-ico">💡</span><span class="tip-text" id="tipText"></span><button type="button" id="tipClose" aria-label="Sembunyikan tips">✕</button></div>
+
+  <main class="panel">
+    <section id="pane-skills" hidden>
+      <div class="pagebar">
+        <button type="button" class="back" id="backSkills" aria-label="Kembali">←</button>
+        <div class="ptitle">🌳 Skill</div>
+        <div class="pstats"><span>SP <b id="spInfo">0</b></span><span>⭐ <b id="starInfo">0</b></span></div>
+        <button type="button" class="pres" id="btnPres">🏗️ Renovasi<i id="presBadge" hidden></i></button>
+      </div>
+      <div class="spnext">SP berikutnya di gigi ke-<b id="spNext">1</b></div>
+      <div class="treewrap" id="treeWrap">
+        <svg id="treeSvg" width="100%" height="100%"><g id="treeG"><g id="treeLines"></g><g id="treeNodes"></g></g></svg>
+        <div class="treectl">
+          <button type="button" id="zIn" aria-label="Perbesar">+</button>
+          <button type="button" id="zOut" aria-label="Perkecil">−</button>
+          <button type="button" id="zFit" aria-label="Pusatkan">⌖</button>
+        </div>
+        <div class="treehelp" id="treeHelp">Geser untuk menjelajah · cubit untuk zoom · ketuk skill untuk detail</div>
+      </div>
+    </section>
+
+    <section id="pane-stats" hidden>
+      <div class="pagebar">
+        <button type="button" class="back" id="backStats" aria-label="Kembali">←</button>
+        <div class="ptitle">📊 Statistik</div>
+        <div class="pstats"></div>
+        <button type="button" class="pres gear" id="btnSettings" aria-label="Pengaturan">⚙️</button>
+      </div>
+      <div class="statwrap"><div class="stats" id="stats"></div></div>
+    </section>
+  </main>
+
+  <div id="drawer" class="drawer" hidden>
+    <aside class="drawer-box" aria-label="Alat">
+      <div class="drawer-head">
+        <div class="dh-title">🛠️ Alat</div>
+        <div class="dh-money" id="drawerMoney">Rp 0</div>
+        <button type="button" id="drawerClose" aria-label="Tutup">✕</button>
+      </div>
+      <div class="qty" id="qty">
+        <button type="button" data-q="1" class="on">×1</button>
+        <button type="button" data-q="10">×10</button>
+        <button type="button" data-q="100">×100</button>
+        <button type="button" data-q="max">Maks</button>
+      </div>
+      <div id="gens" class="list"></div>
+    </aside>
+  </div>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <div id="sheet" class="sheet" hidden><div class="sheet-box" id="sheetBody"></div></div>
+</div>
+<script src="core.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>

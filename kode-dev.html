@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generator kode developer</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#10171A;color:#EAF2F0;margin:0;padding:16px;max-width:480px}
+label{display:block;margin:12px 0 4px;font-size:13px;color:#9FB0B5}
+input[type=number],input[type=text]{width:100%;box-sizing:border-box;padding:10px;border-radius:10px;border:1px solid #2B3A41;background:#141D22;color:#EAF2F0;font-size:16px}
+.chk{display:flex;align-items:center;gap:8px;margin:10px 0}
+button{margin-top:14px;padding:12px 16px;border-radius:10px;border:0;background:#FFD84A;color:#2A2208;font-weight:800;font-size:15px}
+#out{margin-top:16px;padding:14px;border-radius:12px;border:1px solid #FFD84A;font:700 20px ui-monospace,monospace;text-align:center;word-break:break-all;background:#1B262C}
+small{color:#9FB0B5;display:block;margin-top:10px;line-height:1.5}
+</style></head><body>
+<h2>Generator kode developer</h2>
+<label>Level gigi (0 = tidak diubah, maks 200)</label><input id="t" type="number" min="0" max="200" value="200">
+<label>Level semua alat (0 = tidak diubah, maks 50)</label><input id="i" type="number" min="0" max="50" value="50">
+<div class="chk"><input id="s" type="checkbox" checked><label style="margin:0">Semua skill permanen</label></div>
+<div class="chk"><input id="a" type="checkbox" checked><label style="margin:0">Semua pencapaian (otomatis ikut skill permanen)</label></div>
+<label>Tanggal DDMMYY (kosong = hari ini)</label><input id="d" type="text" maxlength="6" inputmode="numeric" placeholder="otomatis">
+<button id="go" type="button">Buat kode</button>
+<div id="out">—</div>
+<small>Tempel kode di Pengaturan → kotak kode → Muat kode. Kode yang salah satu hurufnya berbeda akan ditolak seperti kode simpanan biasa. Berkas ini harus satu folder dengan core.js.</small>
+<script src="core.js"></script>
+<script>
+document.getElementById('go').onclick = function () {
+  var v = function (id) { return document.getElementById(id); };
+  v('out').textContent = KGCore.makeDevCode({ teeth: +v('t').value, items: +v('i').value, skills: v('s').checked, achv: v('a').checked, date: v('d').value });
+};
+document.getElementById('go').click();
+</script></body></html>
